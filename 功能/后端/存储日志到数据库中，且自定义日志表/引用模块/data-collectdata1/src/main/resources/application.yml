@@ -1,0 +1,25 @@
+#自定义自动配置包 application.yml不会主动加载，需要你去处理
+database:
+  ip: localhost
+
+spring:
+  datasource:
+    url: jdbc:log4jdbc:mysql://${database.ip}:3306/dx45g?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowMultiQueries=true
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    username: wujianmin
+    password: 123456
+    type: com.zaxxer.hikari.HikariDataSource
+
+#自定义数据
+ftp:
+  host: 192.168.166.150
+  port: 21
+  username: ftpUser
+  password: 123456
+  timeout: 2000
+  savePath: D:/s #home/data/Storedata/45ghdata/
+  dir: /sftp/data/Storedata/45ghdata
+  cron: 0 0 * * * ?
+  cron2: 0 0 22 * * ?
+mapper-locations: classpath:/mapper/*.xml
+

@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="30 seconds" debug="false">
+
+    <contextName>elAdmin</contextName>
+<!--    <springProperty scope="context" name="ip" source="info"-->
+<!--                    defaultValue="localhost"/>-->
+<!--    <property name="info.ip" value="${ip}"/>-->
+    <property name="log.charset" value="utf-8"/>
+    <property name="log.pattern"
+              value="%black(%contextName-) %red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{36}) - %gray(%msg%n)"/>
+    <property name="LOG_HOME" value="/home/abc"/>
+    <!--输出到控制台-->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${log.pattern}</pattern>
+            <charset>${log.charset}</charset>
+        </encoder>
+    </appender>
+
+<!--    <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">-->
+
+<!--        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
+<!--            <level>INFO</level>-->
+<!--        </filter>-->
+
+<!--        &lt;!&ndash; 可让每天产生一个日志文件，最多 10 个，自动回滚 &ndash;&gt;-->
+<!--        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
+<!--            <fileNamePattern>${LOG_HOME}/logs/log-%d{yyyy-MM-dd}.log</fileNamePattern>-->
+<!--            <maxHistory>60</maxHistory>-->
+<!--        </rollingPolicy>-->
+
+<!--        <encoder>-->
+<!--            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>-->
+<!--        </encoder>-->
+<!--    </appender>-->
+
+<!--ch.qos.logback.classic.db.DBAppender-->
+    <appender name="logDB" class="com.weipu.dx45gdata.common.config.MyDBAppender">
+        <connectionSource class="ch.qos.logback.core.db.DataSourceConnectionSource">
+            <dataSource class="com.zaxxer.hikari.HikariDataSource">
+                <driverClassName>com.mysql.cj.jdbc.Driver</driverClassName>
+                <jdbcUrl>jdbc:mysql://192.168.166.150/dx45g?useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=false&amp;serverTimezone=Asia/Shanghai&amp;allowMultiQueries=true</jdbcUrl>
+                <username>wujianmin</username>
+                <password>123456</password>
+            </dataSource>
+        </connectionSource>
+    </appender>
+
+<!--    <appender name="asyncLogDB" class="ch.qos.logback.classic.AsyncAppender">-->
+
+<!-- 　　     <appender-ref ref="logDB" />-->
+<!--　　      <includeCallerData>true</includeCallerData>-->
+
+<!--    </appender>-->
+
+    <!--普通日志输出到控制台-->
+    <root level="info">
+        <appender-ref ref="console"/>
+<!--        <appender-ref ref="asyncLogDB"/>-->
+<!--        <appender-ref ref="rollingFile"/>-->
+<!--        <appender-ref ref="asyncLogDB"/>-->
+    </root>
+
+    <logger name="com.weipu.dx45gdata.collectdata1.task.DownLoadTask" level="INFO" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logDB"/>
+    </logger>
+    <logger name="com.weipu.dx45gdata.fillingdata1.task.DownLoadTask" level="INFO" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logDB"/>
+    </logger>
+    <logger name="com.weipu.dx45gdata.common.service.impl.AbDataServiceImpl" level="INFO" additivity="false">
+        <appender-ref ref="console"/>
+        <appender-ref ref="logDB"/>
+    </logger>
+
+    <!--监控sql日志输出 -->
+<!--    <logger name="jdbc.sqlonly" level="ERROR" additivity="false">-->
+<!--        <appender-ref ref="console"/>-->
+<!--        <appender-ref ref="logDB"/>-->
+<!--    </logger>-->
+
+    <logger name="jdbc.resultset" level="ERROR" additivity="false">
+        <appender-ref ref="console"/>
+    </logger>
+
+    <!--  如想看到表格数据，将OFF改为INFO  -->
+    <logger name="jdbc.resultsettable" level="OFF" additivity="false">
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="jdbc.connection" level="OFF" additivity="false">
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="jdbc.sqltiming" level="OFF" additivity="false">
+        <appender-ref ref="console"/>
+    </logger>
+
+    <logger name="jdbc.audit" level="OFF" additivity="false">
+        <appender-ref ref="console"/>
+    </logger>
+</configuration>

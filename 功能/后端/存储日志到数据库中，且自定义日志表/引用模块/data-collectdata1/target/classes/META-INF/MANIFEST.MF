@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Built-By: 11044
+Build-Jdk: 17.0.4.1
+Implementation-Title: dx45gdata-collectdata1
+Implementation-Version: 2.0.0.RELEASE
+Implementation-Vendor-Id: org.springframework.boot
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-boot
+ -starter-parent/dx45gdata-collectdata1
+Created-By: Maven Integration for Eclipse
+
